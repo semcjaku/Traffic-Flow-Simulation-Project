@@ -55,7 +55,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scenes\CarBehavior.cs" />
+     <Compile Include="Assets\Scripts\CarBehavior.cs" />
+     <Compile Include="Assets\Scripts\Crossroads.cs" />
+     <Compile Include="Assets\Scripts\SimpleStreetLight.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>D:/Kuba/AGH/SDSZ/Traffic-Flow-Simulation-Project/SDSZ/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
