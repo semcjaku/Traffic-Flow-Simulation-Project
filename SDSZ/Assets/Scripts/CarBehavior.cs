@@ -11,7 +11,7 @@ public class CarBehavior : MonoBehaviour
     public int nextTurn;
 
     private bool stayBlocade_fl;
-    private float stayTimer_tim;
+    private float stayBlocadeTimer_tim, stayTime_tim, stayTime1, stayTime2;
     private Rigidbody2D rb2d;
     private CapsuleCollider2D carCollider;
     private Crossroads crossroads;
@@ -23,7 +23,7 @@ public class CarBehavior : MonoBehaviour
         carCollider = GetComponent<CapsuleCollider2D>();
         crossroads = GameObject.Find("Obszar skrzyzowania").GetComponent<Crossroads>();
         light01 = GameObject.Find("TrafficLight01").GetComponent<SimpleStreetLight>();
-        nextTurn = (int)Direction.right;
+        nextTurn = (int)Direction.left;
         stayBlocade_fl = false;
     }
 
@@ -32,12 +32,17 @@ public class CarBehavior : MonoBehaviour
         SetMovementCompounds(); //set compounds
         Vector2 movement = new Vector2(rb2d.position.x+xSpeedCompound,rb2d.position.y+ySpeedCompound); //set movement vector
         rb2d.MovePosition(movement); //move the car
-        stayTimer_tim -= Time.deltaTime;
+        stayBlocadeTimer_tim -= Time.deltaTime;
     }
 
     void CarStop()
     {
         currentSpeed = 0;
+    }
+
+    void CarStart()
+    {
+        currentSpeed = 0.025f;
     }
 
     void CarSlowDown(float x)
@@ -74,20 +79,28 @@ public class CarBehavior : MonoBehaviour
             ySpeedCompound *= -1;
     }
 
-    /*void OnTriggerEnter2D(Collider2D other) //#WIP #Temp
+    void OnTriggerEnter2D(Collider2D other) //#WIP #Temp
     {
         if (other.gameObject.tag == "Cross section") //Executed while car enters crossroads
         {
             if (!stayBlocade_fl)
             {
-                if(light01.status == (int)SimpleStreetLight.LightColor.red)
+                stayTime_tim = 0f;
+                stayTime1 = (carCollider.size.y / 2f) / (currentSpeed*50f);  //Time in which half of the car gets beyond the box border
+                switch (nextTurn)
                 {
-                    CarStop();
+                    case (int)Direction.left:
+                        turnRadius = crossroads.radiusLeft;
+                        break;
+                    case (int)Direction.right:
+                        turnRadius = crossroads.radiusRight*(-1f);
+                        break;
                 }
-                currentSpeed = 0.05f;
+                stayTime2 = ((carCollider.size.y + (float)Math.PI * Math.Abs(turnRadius)) / 2f) / (currentSpeed*50f);  //Time in which the car makes the turn and its half gets beyond other border
+                Debug.Log(stayTime2);
             }
         }
-    }*/
+    }
 
     void OnTriggerStay2D(Collider2D other) //#WIP #Temp
     {
@@ -95,17 +108,15 @@ public class CarBehavior : MonoBehaviour
         {
             if(!stayBlocade_fl)
             {
-                switch (nextTurn)
+                if(stayTime_tim>=stayTime1 && stayTime_tim<stayTime2)
                 {
-                    case (int)Direction.left:
-                        turnRadius = crossroads.radiusLeft + 0.16f; //dlugosc auta
-                        rb2d.MoveRotation(rb2d.rotation + (50f * currentSpeed / turnRadius)); //wzor na zmiane obrotu w czasie zalezny od predkosci z uwzglednieniem odswiezania co 0.02s
-                        break;
-                    case (int)Direction.right:
-                        turnRadius = crossroads.radiusRight + 0.16f;
-                        rb2d.MoveRotation(rb2d.rotation - (50f * currentSpeed / turnRadius));
-                        break;
+                    float k = 1f;
+                    if (nextTurn == (int)Direction.right)
+                        k = -1f;
+                    rb2d.MoveRotation(rb2d.rotation + k*(90f / ((stayTime2 - stayTime1) / 0.02f))); //wzor na zmiane obrotu w czasie zalezny od predkosci z uwzglednieniem odswiezania co 0.02s
                 }
+                stayTime_tim += Time.deltaTime;
+                Debug.Log(stayTime_tim);
             }
             
         }  
@@ -113,9 +124,11 @@ public class CarBehavior : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other) //#WIP #Temp
     {
-        stayBlocade_fl = true;
-        stayTimer_tim = 0.1f;
         if (other.gameObject.tag == "Cross section") //Executed while car enters crossroads
+        {
+            stayBlocade_fl = true;
+            stayBlocadeTimer_tim = 0.1f;
             RoundRotation();
+        }
     }
 }

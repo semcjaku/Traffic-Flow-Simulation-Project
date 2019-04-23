@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cross section
   - Vehicle
+  - Light
   layers:
   - Default
   - TransparentFX
