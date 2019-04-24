@@ -7,10 +7,11 @@ public class CarBehavior : MonoBehaviour
 {
     enum Direction {up=1, right, down, left};
 
-    public float currentSpeed, xSpeedCompound, ySpeedCompound, turnRadius;
+    public float currentSpeed, currentAcceleration, xSpeedCompound, ySpeedCompound, turnRadius;
     public int nextTurn;
+    public const float maxSpeed = 0.05f;
 
-    private bool stayBlocade_fl;
+    private bool stayBlocade_fl, canAccelerate_fl;
     private float stayBlocadeTimer_tim, stayTime_tim, stayTime1, stayTime2;
     private Rigidbody2D rb2d;
     private CapsuleCollider2D carCollider;
@@ -23,12 +24,17 @@ public class CarBehavior : MonoBehaviour
         carCollider = GetComponent<CapsuleCollider2D>();
         crossroads = GameObject.Find("Obszar skrzyzowania").GetComponent<Crossroads>();
         light01 = GameObject.Find("TrafficLight01").GetComponent<SimpleStreetLight>();
-        nextTurn = (int)Direction.left;
+        /////////////////TEMP///////////////////////////
+        nextTurn = (int)Direction.right;
+        currentAcceleration = 0.0005f;
+        ////////////////////////////////////
         stayBlocade_fl = false;
+        canAccelerate_fl = true;
     }
 
     void FixedUpdate()
     {
+        Accelerate(currentAcceleration);
         SetMovementCompounds(); //set compounds
         Vector2 movement = new Vector2(rb2d.position.x+xSpeedCompound,rb2d.position.y+ySpeedCompound); //set movement vector
         rb2d.MovePosition(movement); //move the car
@@ -37,11 +43,13 @@ public class CarBehavior : MonoBehaviour
 
     void CarStop()
     {
+        canAccelerate_fl = false;
         currentSpeed = 0;
     }
 
     void CarStart()
     {
+        canAccelerate_fl = true;
         currentSpeed = 0.025f;
     }
 
@@ -50,13 +58,21 @@ public class CarBehavior : MonoBehaviour
         currentSpeed-=x;
     }
 
+    void Accelerate(float a)
+    {
+        if (currentSpeed < maxSpeed && canAccelerate_fl)
+            currentSpeed += a;
+        if (currentSpeed > maxSpeed)
+            currentSpeed = maxSpeed;
+    }
+
     void RoundRotation()
     {
         if(Math.Abs(rb2d.rotation) % 360 >= 340f || Math.Abs(rb2d.rotation) % 360 <= 20f)
         {
             rb2d.MoveRotation(0);
         }
-        else if(Math.Abs(rb2d.rotation) % 360 >= 70f && Math.Abs(rb2d.rotation) % 360 <= 110f)
+        else if((Math.Abs(rb2d.rotation) % 360 >= 70f && Math.Abs(rb2d.rotation) % 360 <= 110f && rb2d.rotation > 0) || (Math.Abs(rb2d.rotation) % 360 >= 250f && Math.Abs(rb2d.rotation) % 360 <= 290f && rb2d.rotation < 0))
         {
             rb2d.MoveRotation(90);
         }
@@ -64,9 +80,9 @@ public class CarBehavior : MonoBehaviour
         {
             rb2d.MoveRotation(180);
         }
-        else if (Math.Abs(rb2d.rotation) % 360 >= 250f && Math.Abs(rb2d.rotation) % 360 <= 290f)
+        else if ((Math.Abs(rb2d.rotation) % 360 >= 70f && Math.Abs(rb2d.rotation) % 360 <= 110f && rb2d.rotation < 0) || (Math.Abs(rb2d.rotation) % 360 >= 250f && Math.Abs(rb2d.rotation) % 360 <= 290f && rb2d.rotation > 0))
         {
-            rb2d.MoveRotation(0);
+            rb2d.MoveRotation(270);
         }
     }
 
@@ -83,6 +99,7 @@ public class CarBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Cross section") //Executed while car enters crossroads
         {
+            canAccelerate_fl = false;
             if (!stayBlocade_fl)
             {
                 stayTime_tim = 0f;
@@ -97,7 +114,6 @@ public class CarBehavior : MonoBehaviour
                         break;
                 }
                 stayTime2 = ((carCollider.size.y + (float)Math.PI * Math.Abs(turnRadius)) / 2f) / (currentSpeed*50f);  //Time in which the car makes the turn and its half gets beyond other border
-                Debug.Log(stayTime2);
             }
         }
     }
@@ -108,15 +124,14 @@ public class CarBehavior : MonoBehaviour
         {
             if(!stayBlocade_fl)
             {
-                if(stayTime_tim>=stayTime1 && stayTime_tim<stayTime2)
+                if (stayTime_tim >= stayTime1 && stayTime_tim < stayTime2 && (nextTurn==(int)Direction.right || nextTurn==(int)Direction.left))
                 {
                     float k = 1f;
                     if (nextTurn == (int)Direction.right)
                         k = -1f;
-                    rb2d.MoveRotation(rb2d.rotation + k*(90f / ((stayTime2 - stayTime1) / 0.02f))); //wzor na zmiane obrotu w czasie zalezny od predkosci z uwzglednieniem odswiezania co 0.02s
+                    rb2d.MoveRotation(rb2d.rotation + k * (90f / ((stayTime2 - stayTime1) / 0.02f))); //wzor na zmiane obrotu w czasie zalezny od predkosci z uwzglednieniem odswiezania co 0.02s
                 }
                 stayTime_tim += Time.deltaTime;
-                Debug.Log(stayTime_tim);
             }
             
         }  
@@ -126,6 +141,7 @@ public class CarBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Cross section") //Executed while car enters crossroads
         {
+            canAccelerate_fl = true;
             stayBlocade_fl = true;
             stayBlocadeTimer_tim = 0.1f;
             RoundRotation();
