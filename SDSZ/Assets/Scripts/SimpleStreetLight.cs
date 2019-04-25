@@ -18,14 +18,14 @@ public class SimpleStreetLight : MonoBehaviour
 
 	public float timer = 2.5f;
 
-    private GameObject carCrossing=null;
+    private GameObject currentCrossingCar=null;
 
-	bool WasGreen = false;
+	bool wasGreen_fl = false;
 	// Start is called before the first frame update
 	void Start()
 	{
 		this.gameObject.GetComponent<SpriteRenderer>().sprite = RedLight;
-        status = 0;
+        status = (int)LightColor.red;
 	}
 
 	// Update is called once per frame
@@ -43,14 +43,14 @@ public class SimpleStreetLight : MonoBehaviour
 			}
 			if (this.gameObject.GetComponent<SpriteRenderer>().sprite == YellowLight) //Y->
 			{
-				if (WasGreen == false)                                                  //->G
+				if (wasGreen_fl == false)                                                  //->G
 				{
 					this.gameObject.GetComponent<SpriteRenderer>().sprite = GreenLight;
                     status = (int)LightColor.green;
-                    if (carCrossing != null) // && !carCrossing.Equals(null) jeśli byłyby błędy
-                        carCrossing.SendMessage("CarStart");
+                    if (currentCrossingCar != null) // && !carCrossing.Equals(null) jeśli byłyby błędy
+                        currentCrossingCar.SendMessage("CarStart");
                     timer = lightphase;
-					WasGreen = true;
+					wasGreen_fl = true;
 					return;
 				}
 				else                                                                    //->R
@@ -75,9 +75,9 @@ public class SimpleStreetLight : MonoBehaviour
     {
         if (other.gameObject.tag == "Vehicle")
         {
-            carCrossing = other.gameObject;
+            currentCrossingCar = other.gameObject;
             if (status == (int)LightColor.red)
-                carCrossing.SendMessage("CarStop");
+                currentCrossingCar.SendMessage("CarStop");
         }
     }
 
@@ -85,7 +85,7 @@ public class SimpleStreetLight : MonoBehaviour
     {
         if (other.gameObject.tag == "Vehicle")
         {
-            carCrossing = null;
+            currentCrossingCar = null;
         }
     }
 }
