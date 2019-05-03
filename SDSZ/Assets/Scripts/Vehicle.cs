@@ -13,12 +13,12 @@ public class Vehicle : ScriptableObject
 
     public Sprite artwork;
 
-    private bool stayBlocade_fl;
-    private float stayBlocadeTimer_tim, stayTime_tim, stayTime1, stayTime2;
-    private Rigidbody2D rb2d;
-    private CapsuleCollider2D carCollider;
-    private Crossroads crossroads;
-    private SimpleStreetLight light01;
+    public bool stayBlocade_fl;
+    public float stayBlocadeTimer_tim, stayTime_tim, stayTime1, stayTime2;
+    public Rigidbody2D rb2d;
+    public CapsuleCollider2D carCollider;
+    public Crossroads crossroads;
+    public SimpleStreetLight light01;
 
 
 }

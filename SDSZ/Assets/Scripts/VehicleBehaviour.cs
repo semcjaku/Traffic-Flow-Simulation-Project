@@ -21,8 +21,8 @@ public class VehicleBehaviour : MonoBehaviour
 
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
-        carCollider = GetComponent<CapsuleCollider2D>();
+        rb2d = Instantiate(vehicle.rb2d);
+        carCollider = Instantiate(vehicle.carCollider);
         crossroads = GameObject.Find("Obszar skrzyzowania").GetComponent<Crossroads>();
         light01 = GameObject.Find("TrafficLight01").GetComponent<SimpleStreetLight>();
         nextTurn = (int)Direction.left;
