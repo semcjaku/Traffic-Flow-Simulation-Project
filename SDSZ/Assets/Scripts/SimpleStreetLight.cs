@@ -16,7 +16,7 @@ public class SimpleStreetLight : MonoBehaviour
 	float yellowtogreen = 1f;
 	float lightphase = 10f;
 
-	public float timer = 2.5f;
+	public float timer = 10.0f;
 
     private GameObject carCrossing=null;
 
