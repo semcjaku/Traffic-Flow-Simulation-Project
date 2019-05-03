@@ -30,7 +30,7 @@ public class VehicleBehaviour : MonoBehaviour
     private Rigidbody2D rb2d;
     private CapsuleCollider2D carCollider;
     private Crossroads crossroads;
-    private SimpleStreetLight light01;
+    //private SimpleStreetLight light01;
 
     void Start()
     {
@@ -44,7 +44,7 @@ public class VehicleBehaviour : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         carCollider = GetComponent<CapsuleCollider2D>();
         crossroads = GameObject.Find("Obszar skrzyzowania").GetComponent<Crossroads>();
-        light01 = GameObject.Find("TrafficLight01").GetComponent<SimpleStreetLight>();
+        //light01 = GameObject.Find("TrafficLight01").GetComponent<SimpleStreetLight>();
         /////////////////TEMP///////////////////////////
         nextTurn = (int)Direction.right;
         localcurrentAcceleration = 0.0005f;

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de646b8e78398ee4eb9526392007213c, type: 3}
-  m_Name: CAR_orange
+  m_Name: CarPrefab
   m_EditorClassIdentifier: 
-  objectName: pomaranczowe auto
+  objectName: auto
   currentSpeed: 0.05
   xSpeedCompound: 0
   ySpeedCompound: 0

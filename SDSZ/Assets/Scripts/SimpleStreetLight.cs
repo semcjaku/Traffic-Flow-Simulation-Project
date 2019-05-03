@@ -58,8 +58,9 @@ public class SimpleStreetLight : MonoBehaviour
 					this.gameObject.GetComponent<SpriteRenderer>().sprite = RedLight;
                     status = (int)LightColor.red;
                     timer = lightphase; 
-					return;
-				}
+					WasGreen = false;
+                    return;
+                }
 			}
 			if (this.gameObject.GetComponent<SpriteRenderer>().sprite == GreenLight) //G->Y
 			{

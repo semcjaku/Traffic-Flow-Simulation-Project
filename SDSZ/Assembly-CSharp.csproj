@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\Crossroads.cs" />
     <Compile Include="Assets\Scripts\MakeOfVehicle.cs" />
     <Compile Include="Assets\Scripts\SimpleStreetLight.cs" />
+    <Compile Include="Assets\Scripts\StreetLightControlling.cs" />
     <Compile Include="Assets\Scripts\Vehicle.cs" />
     <Compile Include="Assets\Scripts\VehicleBehaviour.cs" />
     <Compile Include="Assets\Scripts\VehicleSpawner.cs" />
