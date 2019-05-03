@@ -348,7 +348,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91600f22c9648bb4fb9c803b0097df0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vehicle: {fileID: 482490159551561207, guid: 3fd014d9780d9024fb485725b809e2f7, type: 3}
+  vehicle_car_orange: {fileID: 482490159551561207, guid: 3fd014d9780d9024fb485725b809e2f7,
+    type: 3}
+  vehicle_car_red: {fileID: 6050547126427319007, guid: 179ae89443d19854484708195e6a0201,
+    type: 3}
+  vehicle_car_blue: {fileID: 4864950525318240299, guid: 3eb0e508cd6fd3a429438bdf90411ba0,
+    type: 3}
   spawnRate: 4
 --- !u!4 &610952689
 Transform:
