@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de646b8e78398ee4eb9526392007213c, type: 3}
-  m_Name: orange_car_object
+  m_Name: CAR_orange
   m_EditorClassIdentifier: 
+  objectName: pomaranczowe auto
   currentSpeed: 0.05
   xSpeedCompound: 0
   ySpeedCompound: 0
-  turnRadius: 0
-  nextTurn: 0
-  artwork: {fileID: 21300000, guid: b0053759e2443b74d8be3f3e22a01c45, type: 3}
+  currentAcceleration: 0
+  stayBlocade_fl: 0
+  canAccelerate_fl: 1
