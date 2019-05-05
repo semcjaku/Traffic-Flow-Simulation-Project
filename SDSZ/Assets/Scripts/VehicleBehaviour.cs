@@ -46,7 +46,7 @@ public class VehicleBehaviour : MonoBehaviour
         crossroads = GameObject.Find("Obszar skrzyzowania").GetComponent<Crossroads>();
         //light01 = GameObject.Find("TrafficLight01").GetComponent<SimpleStreetLight>();
         /////////////////TEMP///////////////////////////
-        nextTurn = (int)Direction.right;
+        nextTurn = 2;//UnityEngine.Random.Range(1,5);
         localcurrentAcceleration = 0.0005f;
         ////////////////////////////////////
         localstayBlocade_fl = vehicle.stayBlocade_fl;

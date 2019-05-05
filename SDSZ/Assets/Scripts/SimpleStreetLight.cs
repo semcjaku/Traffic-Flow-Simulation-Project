@@ -12,15 +12,16 @@ public class SimpleStreetLight : MonoBehaviour
     public int status;
 
 
-	float redtoyellow = 2f;
-	float yellowtogreen = 1f;
-	float lightphase = 10f;
+    public float redtoyellow = 2f;
+    public float yellowtogreen = 1.5f;
+    public float redlightphase = 31.5f;
+    public float greenlightphase = 10f;
 
-	public float timer = 10.0f;
+    public float timer = 10.0f;
 
     private GameObject carCrossing=null;
 
-	bool WasGreen = false;
+	public bool WasGreen = false;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -29,7 +30,7 @@ public class SimpleStreetLight : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update()
+	void FixedUpdate()
 	{
         timer -= Time.deltaTime;
 		if (timer <= 0)
@@ -49,7 +50,7 @@ public class SimpleStreetLight : MonoBehaviour
                     status = (int)LightColor.green;
                     if (carCrossing != null) // && !carCrossing.Equals(null) jeśli byłyby błędy
                         carCrossing.SendMessage("CarStart");
-                    timer = lightphase;
+                    timer = greenlightphase;
 					WasGreen = true;
 					return;
 				}
@@ -57,7 +58,7 @@ public class SimpleStreetLight : MonoBehaviour
 				{
 					this.gameObject.GetComponent<SpriteRenderer>().sprite = RedLight;
                     status = (int)LightColor.red;
-                    timer = lightphase; 
+                    timer = redlightphase; 
 					WasGreen = false;
                     return;
                 }

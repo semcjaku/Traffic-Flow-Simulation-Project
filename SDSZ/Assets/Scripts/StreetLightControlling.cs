@@ -5,7 +5,10 @@ using UnityEngine;
 public class StreetLightControlling : MonoBehaviour
 {
 
-    public GameObject basic_street_light;
+    public GameObject basic_street_light1;
+    public GameObject basic_street_light2;
+    public GameObject basic_street_light3;
+    public GameObject basic_street_light4;
 
     float XshiftLeft = -0.8f;
     float YshiftLeft = -0.8f;
@@ -31,15 +34,15 @@ public class StreetLightControlling : MonoBehaviour
         wheretoplace_right = new Vector2(XshiftRight, YshiftRight);
         wheretoplace_down = new Vector2(XshiftDown, YshiftDown);
 
-        GameObject.Instantiate(basic_street_light, wheretoplace_left, transform.rotation * Quaternion.Euler(0f, 0f, 270f));
-        GameObject.Instantiate(basic_street_light, wheretoplace_top, transform.rotation * Quaternion.Euler(0f, 0f, 180f));
-        GameObject.Instantiate(basic_street_light, wheretoplace_right, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
-        GameObject.Instantiate(basic_street_light, wheretoplace_down, transform.rotation * Quaternion.Euler(0f, 0f, 0f));
+        GameObject.Instantiate(basic_street_light1, wheretoplace_left, transform.rotation * Quaternion.Euler(0f, 0f, 270f));
+        GameObject.Instantiate(basic_street_light2, wheretoplace_top, transform.rotation * Quaternion.Euler(0f, 0f, 180f));
+        GameObject.Instantiate(basic_street_light3, wheretoplace_right, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
+        GameObject.Instantiate(basic_street_light4, wheretoplace_down, transform.rotation * Quaternion.Euler(0f, 0f, 0f));
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+
     }
 }

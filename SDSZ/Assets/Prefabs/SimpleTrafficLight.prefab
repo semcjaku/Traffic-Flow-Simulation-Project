@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3910108167522604747}
   - component: {fileID: 3910108167522604750}
   m_Layer: 0
-  m_Name: TrafficLight01
+  m_Name: SimpleTrafficLight
   m_TagString: Light
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,12 @@ MonoBehaviour:
   YellowLight: {fileID: 21300000, guid: 111c92441555d9540b8e50a48d7be910, type: 3}
   GreenLight: {fileID: 21300000, guid: bb34c3d1759d2e844abaff5605f08a47, type: 3}
   status: 0
-  timer: 2.5
+  redtoyellow: 2
+  yellowtogreen: 1.5
+  redlightphase: 33
+  greenlightphase: 10
+  timer: 0
+  WasGreen: 0
 --- !u!68 &3910108167522604750
 EdgeCollider2D:
   m_ObjectHideFlags: 0

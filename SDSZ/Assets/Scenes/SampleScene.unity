@@ -433,7 +433,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46c3cf7204032c0448cf49979f70cd4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basic_street_light: {fileID: 3910108167522604746, guid: 1d308f46831cc9c4eb68fce5ec236a29,
+  basic_street_light1: {fileID: 3910108167522604746, guid: 1d308f46831cc9c4eb68fce5ec236a29,
+    type: 3}
+  basic_street_light2: {fileID: 1933635277583073210, guid: eb2a3baf26a6cbf4fa5d35ada697582a,
+    type: 3}
+  basic_street_light3: {fileID: 49989000620912776, guid: b082f0ca43339414ab9c90b52d966d9b,
+    type: 3}
+  basic_street_light4: {fileID: 6041065664365001323, guid: 823ac31f23a097340a8cb68ccb539b04,
     type: 3}
 --- !u!4 &1457347966
 Transform:

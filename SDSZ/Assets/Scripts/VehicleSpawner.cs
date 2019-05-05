@@ -40,7 +40,7 @@ public class VehicleSpawner : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         
         if (Time.time > nextSpawn && i<NumberOfVehicles)
