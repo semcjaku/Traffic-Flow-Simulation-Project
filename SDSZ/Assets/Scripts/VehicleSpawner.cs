@@ -8,6 +8,8 @@ public class VehicleSpawner : MonoBehaviour
     public GameObject vehicle_car_red;
     public GameObject vehicle_car_blue;
 
+    private GameObject temp_object;
+
     public float spawnRate = 4.0f;
 
     float nextSpawn = 4.0f;
@@ -31,12 +33,15 @@ public class VehicleSpawner : MonoBehaviour
 
     int NumberOfVehicles = 6;
     int i = 0;
+    int k = 0;
+
+    public List<GameObject> existing_cars;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        List<GameObject> existing_cars = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -52,15 +57,18 @@ public class VehicleSpawner : MonoBehaviour
                     Debug.Log("pętla " + i + "\n Wylosowało wartosc:" + colour_of_the_vehicle);
                     if (colour_of_the_vehicle == 1)
                     {
-                        GameObject.Instantiate(vehicle_car_orange, wheretoplace_left, transform.rotation * Quaternion.Euler(0f, 0f, 270f));
+                        temp_object = GameObject.Instantiate(vehicle_car_orange, wheretoplace_left, transform.rotation * Quaternion.Euler(0f, 0f, 270f));
+                        existing_cars.Add(temp_object);
                     }
                     if (colour_of_the_vehicle == 2)
                     {
-                        GameObject.Instantiate(vehicle_car_red, wheretoplace_left, transform.rotation * Quaternion.Euler(0f, 0f, 270f));
+                        temp_object = GameObject.Instantiate(vehicle_car_red, wheretoplace_left, transform.rotation * Quaternion.Euler(0f, 0f, 270f));
+                        existing_cars.Add(temp_object);
                     }
                     if (colour_of_the_vehicle == 3)
                     {
-                        GameObject.Instantiate(vehicle_car_blue, wheretoplace_left, transform.rotation * Quaternion.Euler(0f, 0f, 270f));
+                        temp_object = GameObject.Instantiate(vehicle_car_blue, wheretoplace_left, transform.rotation * Quaternion.Euler(0f, 0f, 270f));
+                        existing_cars.Add(temp_object);
                     }
                     //break;
                 }
@@ -74,15 +82,18 @@ public class VehicleSpawner : MonoBehaviour
                     Debug.Log("pętla " + i + "\n Wylosowało wartosc:" + colour_of_the_vehicle);
                     if (colour_of_the_vehicle == 1)
                     {
-                        GameObject.Instantiate(vehicle_car_orange, wheretoplace_top, transform.rotation * Quaternion.Euler(0f, 0f, 180f));
+                        temp_object = GameObject.Instantiate(vehicle_car_orange, wheretoplace_top, transform.rotation * Quaternion.Euler(0f, 0f, 180f));
+                        existing_cars.Add(temp_object);
                     }
                     if (colour_of_the_vehicle == 2)
                     {
-                        GameObject.Instantiate(vehicle_car_red, wheretoplace_top, transform.rotation * Quaternion.Euler(0f, 0f, 180f));
+                        temp_object = GameObject.Instantiate(vehicle_car_red, wheretoplace_top, transform.rotation * Quaternion.Euler(0f, 0f, 180f));
+                        existing_cars.Add(temp_object);
                     }
                     if (colour_of_the_vehicle == 3)
                     {
-                        GameObject.Instantiate(vehicle_car_blue, wheretoplace_top, transform.rotation * Quaternion.Euler(0f, 0f, 180f));
+                        temp_object = GameObject.Instantiate(vehicle_car_blue, wheretoplace_top, transform.rotation * Quaternion.Euler(0f, 0f, 180f));
+                        existing_cars.Add(temp_object);
                     }
                     //break;
                 }
@@ -96,15 +107,18 @@ public class VehicleSpawner : MonoBehaviour
                     Debug.Log("pętla " + i + "\n Wylosowało wartosc:" + colour_of_the_vehicle);
                     if (colour_of_the_vehicle == 1)
                     {
-                        GameObject.Instantiate(vehicle_car_orange, wheretoplace_right, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
+                        temp_object = GameObject.Instantiate(vehicle_car_orange, wheretoplace_right, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
+                        existing_cars.Add(temp_object);
                     }
                     if (colour_of_the_vehicle == 2)
                     {
-                        GameObject.Instantiate(vehicle_car_red, wheretoplace_right, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
+                        temp_object = GameObject.Instantiate(vehicle_car_red, wheretoplace_right, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
+                        existing_cars.Add(temp_object);
                     }
                     if (colour_of_the_vehicle == 3)
                     {
-                        GameObject.Instantiate(vehicle_car_blue, wheretoplace_right, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
+                        temp_object = GameObject.Instantiate(vehicle_car_blue, wheretoplace_right, transform.rotation * Quaternion.Euler(0f, 0f, 90f));
+                        existing_cars.Add(temp_object);
                     }
                     //break;
                 }
@@ -118,22 +132,27 @@ public class VehicleSpawner : MonoBehaviour
                     Debug.Log("pętla " + i + "\n Wylosowało wartosc:" + colour_of_the_vehicle);
                     if (colour_of_the_vehicle == 1)
                     {
-                        GameObject.Instantiate(vehicle_car_orange, wheretoplace_down, transform.rotation * Quaternion.Euler(0f, 0f, 0f));
+                        temp_object = GameObject.Instantiate(vehicle_car_orange, wheretoplace_down, transform.rotation * Quaternion.Euler(0f, 0f, 0f));
+                        existing_cars.Add(temp_object);
                     }
-                    if (colour_of_the_vehicle == 2)
+                if (colour_of_the_vehicle == 2)
                     {
-                        GameObject.Instantiate(vehicle_car_red, wheretoplace_down, transform.rotation * Quaternion.Euler(0f, 0f, 0f));
+                        temp_object = GameObject.Instantiate(vehicle_car_red, wheretoplace_down, transform.rotation * Quaternion.Euler(0f, 0f, 0f));
+                        existing_cars.Add(temp_object);
                     }
-                    if (colour_of_the_vehicle == 3)
+                if (colour_of_the_vehicle == 3)
                     {
-                        GameObject.Instantiate(vehicle_car_blue, wheretoplace_down, transform.rotation * Quaternion.Euler(0f, 0f, 0f));
+                        temp_object = GameObject.Instantiate(vehicle_car_blue, wheretoplace_down, transform.rotation * Quaternion.Euler(0f, 0f, 0f));
+                        existing_cars.Add(temp_object);
                     }
-                    //break;
-                }
+                //break;
+            }
                 nextSpawn = Time.time + spawnRate;
                 i++;
             }
-        
-        
+        //if(k%100 ==0)
+        //Debug.Log("Lista: " + existing_cars);
+        //k++;
     }
+    
 }

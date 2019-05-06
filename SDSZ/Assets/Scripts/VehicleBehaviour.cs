@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class VehicleBehaviour : MonoBehaviour
 {
     public Vehicle vehicle;
+    
 
     enum Direction { up = 1, right, down, left };
 
@@ -25,11 +26,21 @@ public class VehicleBehaviour : MonoBehaviour
 
     public bool localstayBlocade_fl;
     public bool localcanAccelerate_fl;
+    public bool SeenOtherCar_fl;
+    public bool DisabledEdge_fl;
 
     private float stayBlocadeTimer_tim, stayTime_tim, stayTime1, stayTime2;
     private Rigidbody2D rb2d;
     private CapsuleCollider2D carCollider;
     private Crossroads crossroads;
+    private BoxCollider2D VirtualBumper;
+
+    private Collider2D another_car_collider;
+    public VehicleSpawner daddy;
+    private Rigidbody2D another_car_rb2d;
+
+
+    public Vector2 offset_vector;
     //private SimpleStreetLight light01;
 
     void Start()
@@ -41,8 +52,12 @@ public class VehicleBehaviour : MonoBehaviour
         localxSpeedCompound = vehicle.xSpeedCompound;
         localcurrentAcceleration = vehicle.currentAcceleration;
 
+
         rb2d = GetComponent<Rigidbody2D>();
         carCollider = GetComponent<CapsuleCollider2D>();
+        VirtualBumper = GetComponent<BoxCollider2D>();
+
+        daddy = GameObject.Find("CarSpawner").GetComponent<VehicleSpawner>();
         crossroads = GameObject.Find("Obszar skrzyzowania").GetComponent<Crossroads>();
         //light01 = GameObject.Find("TrafficLight01").GetComponent<SimpleStreetLight>();
         /////////////////TEMP///////////////////////////
@@ -60,9 +75,27 @@ public class VehicleBehaviour : MonoBehaviour
         Vector2 movement = new Vector2(rb2d.position.x + localxSpeedCompound, rb2d.position.y + localySpeedCompound); //set movement vector
         rb2d.MovePosition(movement); //move the car
         stayBlocadeTimer_tim -= Time.deltaTime;
+        if (stayBlocadeTimer_tim <= 0)
+            localstayBlocade_fl = false;
         //m_Image.sprite = m_Sprite;
     }
 
+    void NextCarChecking()
+    {
+        foreach (GameObject another_one in daddy.existing_cars)
+
+        {
+            another_car_collider = another_one.GetComponent<CapsuleCollider2D>();
+            another_car_rb2d = another_one.GetComponent<Rigidbody2D>();
+            float line_of_sight = (((localySpeedCompound / localcurrentSpeed - rb2d.position.y) / (localxSpeedCompound / localcurrentSpeed - rb2d.position.x)) * (another_car_rb2d.position.x - rb2d.position.x) + rb2d.position.y);
+            if (another_car_rb2d.position.y >= line_of_sight-0.5f*carCollider.size.y && another_car_rb2d.position.y <= line_of_sight + 0.5f * carCollider.size.y)
+            {
+                Debug.Log("Widzę auto: " + another_one);
+            }
+        }
+    }
+
+    
     void CarStop()
     {
         localcanAccelerate_fl = false;
@@ -77,7 +110,11 @@ public class VehicleBehaviour : MonoBehaviour
 
     void CarSlowDown(float x)
     {
-        localcurrentSpeed -= x;
+        if (localcurrentSpeed > x)
+            localcurrentSpeed -= x;
+        else
+            localcurrentSpeed = 0;
+
     }
 
     void Accelerate(float a)
@@ -119,6 +156,8 @@ public class VehicleBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other) //#WIP #Temp
     {
+        
+
         if (other.gameObject.tag == "Cross section") //Executed while car enters crossroads
         {
             localcanAccelerate_fl = false;
@@ -137,7 +176,15 @@ public class VehicleBehaviour : MonoBehaviour
                 }
                 stayTime2 = ((carCollider.size.y + (float)Math.PI * Math.Abs(localturnRadius)) / 2f) / (localcurrentSpeed * 50f);  //Time in which the car makes the turn and its half gets beyond other border
             }
+            
         }
+        /*if (VirtualBumper.IsTouching(other) && other.gameObject.tag == "Vehicle")
+        {
+            CarSlowDown(0.01f);
+            SeenOtherCar_fl = true;
+            Debug.Log("Spotkałem auto: " + gameObject);
+
+        }*/
     }
 
     void OnTriggerStay2D(Collider2D other) //#WIP #Temp
@@ -157,16 +204,31 @@ public class VehicleBehaviour : MonoBehaviour
             }
 
         }
+        
+
+        /*if (other.gameObject.tag == "Vehicle")
+        {
+            CarSlowDown(0.01f);
+            SeenOtherCar_fl = true;
+            Debug.Log("Spotkałem auto: " + gameObject);
+        }*/
+
+
     }
+
+    
 
     void OnTriggerExit2D(Collider2D other) //#WIP #Temp
     {
+        
+            
         if (other.gameObject.tag == "Cross section") //Executed while car enters crossroads
         {
             localcanAccelerate_fl = true;
             localstayBlocade_fl = true;
             stayBlocadeTimer_tim = 0.1f;
             RoundRotation();
+            Debug.Log("Wyszedłem!!!");
         }
     }
 }
