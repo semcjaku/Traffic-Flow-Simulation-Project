@@ -108,6 +108,7 @@ MonoBehaviour:
   localcanAccelerate_fl: 0
   SeenOtherCar_fl: 0
   DisabledEdge_fl: 0
+  daddy: {fileID: 0}
   offset_vector: {x: 0, y: 0}
 --- !u!70 &1330689159628824009
 CapsuleCollider2D:

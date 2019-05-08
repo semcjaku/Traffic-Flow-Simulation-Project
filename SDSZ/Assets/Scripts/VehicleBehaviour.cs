@@ -78,20 +78,31 @@ public class VehicleBehaviour : MonoBehaviour
         if (stayBlocadeTimer_tim <= 0)
             localstayBlocade_fl = false;
         //m_Image.sprite = m_Sprite;
+        NextCarChecking();
     }
 
     void NextCarChecking()
     {
         foreach (GameObject another_one in daddy.existing_cars)
-
         {
-            another_car_collider = another_one.GetComponent<CapsuleCollider2D>();
-            another_car_rb2d = another_one.GetComponent<Rigidbody2D>();
-            float line_of_sight = (((localySpeedCompound / localcurrentSpeed - rb2d.position.y) / (localxSpeedCompound / localcurrentSpeed - rb2d.position.x)) * (another_car_rb2d.position.x - rb2d.position.x) + rb2d.position.y);
-            if (another_car_rb2d.position.y >= line_of_sight-0.5f*carCollider.size.y && another_car_rb2d.position.y <= line_of_sight + 0.5f * carCollider.size.y)
+            if(another_one != this.gameObject)
             {
-                Debug.Log("Widzę auto: " + another_one);
+                another_car_collider = another_one.GetComponent<CapsuleCollider2D>();
+                another_car_rb2d = another_one.GetComponent<Rigidbody2D>();
+                float line_of_sight = (localySpeedCompound/localxSpeedCompound) * (another_car_rb2d.position.x - rb2d.position.x) + rb2d.position.y;
+                if (another_car_rb2d.position.y >= line_of_sight-0.5f*carCollider.size.y && another_car_rb2d.position.y <= line_of_sight + 0.5f * carCollider.size.y) //if car is in line of sight
+                {
+                    //vvvvvvvvvvvvvvvvvvvvvTEN IF NIE BĘDZIE DZIAŁAŁ PRZEZ BŁĘDY NUMERYCZNE -> TRZEBA ZWIĘKSZYĆ TOLERANCJĘ WARUNKÓW GRANICZNYCH -> TO MOŻE RODZIĆ BŁĘDY W DRUGĄ STRONĘ => DO PRZEMYŚLENIAvvvvvvvvvvvvvvvvvvvvvvvv
+                    if ((((Math.Abs(rb2d.rotation) % 360 > 0f && Math.Abs(rb2d.rotation) % 360 < 180f && rb2d.rotation > 0) || (Math.Abs(rb2d.rotation) % 360 > 180f && rb2d.rotation < 0)) && another_car_rb2d.position.x <= rb2d.position.x) || //if seen car is actually in front of this car
+                        (((Math.Abs(rb2d.rotation) % 360 > 180f && rb2d.rotation > 0) || (Math.Abs(rb2d.rotation) % 360 > 0f && Math.Abs(rb2d.rotation) % 360 < 180f && rb2d.rotation < 0)) && another_car_rb2d.position.x >= rb2d.position.x) ||
+                        (Math.Abs(rb2d.rotation) % 360 == 180f && another_car_rb2d.position.y <= rb2d.position.y) ||
+                        (Math.Abs(rb2d.rotation) % 360 == 0f && another_car_rb2d.position.y >= rb2d.position.y))
+                    {
+                        Debug.Log("Jestem: " + this + "Widzę auto: " + another_one);
+                    }
+                }
             }
+
         }
     }
 
@@ -230,5 +241,14 @@ public class VehicleBehaviour : MonoBehaviour
             RoundRotation();
             Debug.Log("Wyszedłem!!!");
         }
+    }
+
+
+ 
+    //DEBUG-----------------------------------------------------------------------
+    void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(1f, 0f, 0f, 1f);
+        Gizmos.DrawLine(rb2d.position, new Vector2(localxSpeedCompound/localcurrentSpeed+rb2d.position.x,localySpeedCompound/localcurrentSpeed + rb2d.position.y));
     }
 }
