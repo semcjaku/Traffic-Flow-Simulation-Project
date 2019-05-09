@@ -26,6 +26,7 @@ public class VehicleBehaviour : MonoBehaviour
 
     public bool localstayBlocade_fl;
     public bool localcanAccelerate_fl;
+    public bool currentlyAvoidingCollision_fl;
     public bool SeenOtherCar_fl;
     public bool DisabledEdge_fl;
 
@@ -66,11 +67,13 @@ public class VehicleBehaviour : MonoBehaviour
         ////////////////////////////////////
         localstayBlocade_fl = vehicle.stayBlocade_fl;
         localcanAccelerate_fl = vehicle.canAccelerate_fl;
+        currentlyAvoidingCollision_fl = false;
     }
 
     void FixedUpdate()
     {
-        Accelerate(localcurrentAcceleration);
+        if(!currentlyAvoidingCollision_fl)
+            Accelerate(localcurrentAcceleration);
         SetMovementCompounds(); //set compounds
         Vector2 movement = new Vector2(rb2d.position.x + localxSpeedCompound, rb2d.position.y + localySpeedCompound); //set movement vector
         rb2d.MovePosition(movement); //move the car
@@ -90,7 +93,7 @@ public class VehicleBehaviour : MonoBehaviour
                 another_car_collider = another_one.GetComponent<CapsuleCollider2D>();
                 another_car_rb2d = another_one.GetComponent<Rigidbody2D>();
                 float line_of_sight = (localySpeedCompound/localxSpeedCompound) * (another_car_rb2d.position.x - rb2d.position.x) + rb2d.position.y;
-                if (another_car_rb2d.position.y >= line_of_sight-0.5f*carCollider.size.y && another_car_rb2d.position.y <= line_of_sight + 0.5f * carCollider.size.y) //if car is in line of sight
+                if ((another_car_rb2d.position.y >= line_of_sight-0.5f*carCollider.size.y && another_car_rb2d.position.y <= line_of_sight + 0.5f * carCollider.size.y) || (localxSpeedCompound==0f && another_car_rb2d.position.x == rb2d.position.x)) //if car is in line of sight
                 {
                     //vvvvvvvvvvvvvvvvvvvvvTEN IF NIE BĘDZIE DZIAŁAŁ PRZEZ BŁĘDY NUMERYCZNE -> TRZEBA ZWIĘKSZYĆ TOLERANCJĘ WARUNKÓW GRANICZNYCH -> TO MOŻE RODZIĆ BŁĘDY W DRUGĄ STRONĘ => DO PRZEMYŚLENIAvvvvvvvvvvvvvvvvvvvvvvvv
                     if ((((Math.Abs(rb2d.rotation) % 360 > 0f && Math.Abs(rb2d.rotation) % 360 < 180f && rb2d.rotation > 0) || (Math.Abs(rb2d.rotation) % 360 > 180f && rb2d.rotation < 0)) && another_car_rb2d.position.x <= rb2d.position.x) || //if seen car is actually in front of this car
@@ -99,10 +102,19 @@ public class VehicleBehaviour : MonoBehaviour
                         (Math.Abs(rb2d.rotation) % 360 == 0f && another_car_rb2d.position.y >= rb2d.position.y))
                     {
                         Debug.Log("Jestem: " + this + "Widzę auto: " + another_one);
+                        if(carCollider.Distance(another_car_collider).distance <= carCollider.size.y)
+                        {
+                            Debug.Log("Jestem: " + this + "Zwalniam");
+                            currentlyAvoidingCollision_fl = true;
+                            Accelerate(-0.004f);
+                        }
+                        else
+                        {
+                            currentlyAvoidingCollision_fl = false;
+                        }
                     }
                 }
             }
-
         }
     }
 
@@ -130,10 +142,12 @@ public class VehicleBehaviour : MonoBehaviour
 
     void Accelerate(float a)
     {
-        if (localcurrentSpeed < localmaxSpeed && localcanAccelerate_fl)
+        if (localcanAccelerate_fl)
             localcurrentSpeed += a;
         if (localcurrentSpeed > localmaxSpeed)
             localcurrentSpeed = localmaxSpeed;
+        if (localcurrentSpeed < 0f)
+            localcurrentSpeed = 0f;
     }
 
     void RoundRotation()
