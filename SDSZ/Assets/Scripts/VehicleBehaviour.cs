@@ -62,7 +62,7 @@ public class VehicleBehaviour : MonoBehaviour
         crossroads = GameObject.Find("Obszar skrzyzowania").GetComponent<Crossroads>();
         //light01 = GameObject.Find("TrafficLight01").GetComponent<SimpleStreetLight>();
         /////////////////TEMP///////////////////////////
-        nextTurn = 2;//UnityEngine.Random.Range(1,5);
+        nextTurn = UnityEngine.Random.Range(1,5);
         localcurrentAcceleration = 0.0005f;
         ////////////////////////////////////
         localstayBlocade_fl = vehicle.stayBlocade_fl;
@@ -95,7 +95,6 @@ public class VehicleBehaviour : MonoBehaviour
                 float line_of_sight = (localySpeedCompound/localxSpeedCompound) * (another_car_rb2d.position.x - rb2d.position.x) + rb2d.position.y;
                 if ((another_car_rb2d.position.y >= line_of_sight-0.5f*carCollider.size.y && another_car_rb2d.position.y <= line_of_sight + 0.5f * carCollider.size.y) || (localxSpeedCompound==0f && another_car_rb2d.position.x == rb2d.position.x)) //if car is in line of sight
                 {
-                    //vvvvvvvvvvvvvvvvvvvvvTEN IF NIE BĘDZIE DZIAŁAŁ PRZEZ BŁĘDY NUMERYCZNE -> TRZEBA ZWIĘKSZYĆ TOLERANCJĘ WARUNKÓW GRANICZNYCH -> TO MOŻE RODZIĆ BŁĘDY W DRUGĄ STRONĘ => DO PRZEMYŚLENIAvvvvvvvvvvvvvvvvvvvvvvvv
                     if ((((Math.Abs(rb2d.rotation) % 360 > 0f && Math.Abs(rb2d.rotation) % 360 < 180f && rb2d.rotation > 0) || (Math.Abs(rb2d.rotation) % 360 > 180f && rb2d.rotation < 0)) && another_car_rb2d.position.x <= rb2d.position.x) || //if seen car is actually in front of this car
                         (((Math.Abs(rb2d.rotation) % 360 > 180f && rb2d.rotation > 0) || (Math.Abs(rb2d.rotation) % 360 > 0f && Math.Abs(rb2d.rotation) % 360 < 180f && rb2d.rotation < 0)) && another_car_rb2d.position.x >= rb2d.position.x) ||
                         (Math.Abs(rb2d.rotation) % 360 == 180f && another_car_rb2d.position.y <= rb2d.position.y) ||
@@ -175,7 +174,7 @@ public class VehicleBehaviour : MonoBehaviour
         localxSpeedCompound = localcurrentSpeed * (float)Math.Sin((rb2d.rotation) / 360 * 2 * Math.PI);
         localySpeedCompound = localcurrentSpeed * (float)Math.Cos((rb2d.rotation) / 360 * 2 * Math.PI);
         localxSpeedCompound *= -1;                                   //Sign modifiers (different than in classical trigonometry because the angle of rotation in unity is 90 degrees smaller than in euclidean geometry)
-        if (rb2d.rotation >= 180 && rb2d.rotation <= 270)
+        if (rb2d.rotation > 180 && rb2d.rotation < 270)
             localySpeedCompound *= -1;
     }
 

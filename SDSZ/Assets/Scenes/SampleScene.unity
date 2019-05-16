@@ -239,6 +239,7 @@ MonoBehaviour:
   vehicle_car_blue: {fileID: 4864950525318240299, guid: 3eb0e508cd6fd3a429438bdf90411ba0,
     type: 3}
   spawnRate: 4
+  existing_cars: []
 --- !u!4 &610952689
 Transform:
   m_ObjectHideFlags: 0
@@ -305,7 +306,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 735876437}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.008, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
