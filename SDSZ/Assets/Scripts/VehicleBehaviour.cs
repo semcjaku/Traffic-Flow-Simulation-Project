@@ -85,7 +85,6 @@ public class VehicleBehaviour : MonoBehaviour
 
     void NextCarChecking()
     {
-        int numericalErrorCorrection = 0; // the goal of this variable is to eliminate a situation where, due to numerical errors, the speed compounds flicker every frame, thus causing the car to move ever so slowly
         foreach (GameObject another_one in daddy.existing_cars)
         {
             if(another_one != this.gameObject)
@@ -106,11 +105,6 @@ public class VehicleBehaviour : MonoBehaviour
                             Debug.Log("Jestem: " + this + "Zwalniam");
                             currentlyAvoidingCollision_fl = true;
                             Accelerate(-0.004f);
-                            numericalErrorCorrection = 2;
-                        }
-                        else if(numericalErrorCorrection>0)
-                        {
-                            numericalErrorCorrection--;
                         }
                         else
                         {
@@ -179,7 +173,7 @@ public class VehicleBehaviour : MonoBehaviour
         localxSpeedCompound = localcurrentSpeed * (float)Math.Sin((rb2d.rotation) / 360 * 2 * Math.PI);
         localySpeedCompound = localcurrentSpeed * (float)Math.Cos((rb2d.rotation) / 360 * 2 * Math.PI);
         localxSpeedCompound *= -1;                                   //Sign modifiers (different than in classical trigonometry because the angle of rotation in unity is 90 degrees smaller than in euclidean geometry)
-        if (rb2d.rotation > 180 && rb2d.rotation < 270)
+        if (rb2d.rotation > 181 && rb2d.rotation < 270) //delikatne przekłamanie, ale naprawia wiele problemów
             localySpeedCompound *= -1;
     }
 
