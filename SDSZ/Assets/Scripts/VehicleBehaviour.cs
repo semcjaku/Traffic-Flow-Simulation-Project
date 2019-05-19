@@ -80,12 +80,12 @@ public class VehicleBehaviour : MonoBehaviour
         stayBlocadeTimer_tim -= Time.deltaTime;
         if (stayBlocadeTimer_tim <= 0)
             localstayBlocade_fl = false;
-        //m_Image.sprite = m_Sprite;
         NextCarChecking();
     }
 
     void NextCarChecking()
     {
+        int numericalErrorCorrection = 0; // the goal of this variable is to eliminate a situation where, due to numerical errors, the speed compounds flicker every frame, thus causing the car to move ever so slowly
         foreach (GameObject another_one in daddy.existing_cars)
         {
             if(another_one != this.gameObject)
@@ -93,12 +93,12 @@ public class VehicleBehaviour : MonoBehaviour
                 another_car_collider = another_one.GetComponent<CapsuleCollider2D>();
                 another_car_rb2d = another_one.GetComponent<Rigidbody2D>();
                 float line_of_sight = (localySpeedCompound/localxSpeedCompound) * (another_car_rb2d.position.x - rb2d.position.x) + rb2d.position.y;
-                if ((another_car_rb2d.position.y >= line_of_sight-0.5f*carCollider.size.y && another_car_rb2d.position.y <= line_of_sight + 0.5f * carCollider.size.y) || (localxSpeedCompound==0f && another_car_rb2d.position.x == rb2d.position.x)) //if car is in line of sight
+                if ((another_car_rb2d.position.y >= line_of_sight-0.5f*carCollider.size.y && another_car_rb2d.position.y <= line_of_sight + 0.5f * carCollider.size.y) || (localxSpeedCompound>=-0.00001f && localxSpeedCompound<=0.00001f && another_car_rb2d.position.x == rb2d.position.x) || (localxSpeedCompound >= -0.00001f && localxSpeedCompound <= 0.00001f && localySpeedCompound >= -0.00001f && localySpeedCompound <= 0.00001f)) //if car is in line of sight
                 {
-                    if ((((Math.Abs(rb2d.rotation) % 360 > 0f && Math.Abs(rb2d.rotation) % 360 < 180f && rb2d.rotation > 0) || (Math.Abs(rb2d.rotation) % 360 > 180f && rb2d.rotation < 0)) && another_car_rb2d.position.x <= rb2d.position.x) || //if seen car is actually in front of this car
-                        (((Math.Abs(rb2d.rotation) % 360 > 180f && rb2d.rotation > 0) || (Math.Abs(rb2d.rotation) % 360 > 0f && Math.Abs(rb2d.rotation) % 360 < 180f && rb2d.rotation < 0)) && another_car_rb2d.position.x >= rb2d.position.x) ||
-                        (Math.Abs(rb2d.rotation) % 360 == 180f && another_car_rb2d.position.y <= rb2d.position.y) ||
-                        (Math.Abs(rb2d.rotation) % 360 == 0f && another_car_rb2d.position.y >= rb2d.position.y))
+                    if ((((Math.Abs(rb2d.rotation) % 360 > 0.00001f && Math.Abs(rb2d.rotation) % 360 < 179.99999f && rb2d.rotation > 0) || (Math.Abs(rb2d.rotation) % 360 > 180.00001f && rb2d.rotation < 0)) && another_car_rb2d.position.x <= rb2d.position.x) || //if seen car is actually in front of this car
+                        (((Math.Abs(rb2d.rotation) % 360 > 180.00001f && rb2d.rotation > 0) || (Math.Abs(rb2d.rotation) % 360 > 0.00001f && Math.Abs(rb2d.rotation) % 360 < 179.99999f && rb2d.rotation < 0)) && another_car_rb2d.position.x >= rb2d.position.x) ||
+                        (Math.Abs(rb2d.rotation) % 360 >= 179.99999f && Math.Abs(rb2d.rotation) % 360 <= 180.00001f && another_car_rb2d.position.y <= rb2d.position.y) ||
+                        (Math.Abs(rb2d.rotation) % 360 >= 359.99999f && Math.Abs(rb2d.rotation) % 360 <= 0.00001f && another_car_rb2d.position.y >= rb2d.position.y))
                     {
                         Debug.Log("Jestem: " + this + "Widzę auto: " + another_one);
                         if(carCollider.Distance(another_car_collider).distance <= carCollider.size.y)
@@ -106,6 +106,11 @@ public class VehicleBehaviour : MonoBehaviour
                             Debug.Log("Jestem: " + this + "Zwalniam");
                             currentlyAvoidingCollision_fl = true;
                             Accelerate(-0.004f);
+                            numericalErrorCorrection = 2;
+                        }
+                        else if(numericalErrorCorrection>0)
+                        {
+                            numericalErrorCorrection--;
                         }
                         else
                         {
