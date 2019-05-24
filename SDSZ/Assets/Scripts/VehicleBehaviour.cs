@@ -17,6 +17,8 @@ public class VehicleBehaviour : MonoBehaviour
     public float localturnRadius;
     public float localcurrentAcceleration;
 
+    public float destroy_timer = 4.0f;
+
     public const float localmaxSpeed = 0.05f;
 
     public int nextTurn;
@@ -29,6 +31,7 @@ public class VehicleBehaviour : MonoBehaviour
     public bool currentlyAvoidingCollision_fl;
     public bool SeenOtherCar_fl;
     public bool DisabledEdge_fl;
+    public bool localDestroy_fl;
 
     private float stayBlocadeTimer_tim, stayTime_tim, stayTime1, stayTime2;
     private Rigidbody2D rb2d;
@@ -40,6 +43,7 @@ public class VehicleBehaviour : MonoBehaviour
     public VehicleSpawner daddy;
     private Rigidbody2D another_car_rb2d;
 
+    public float temp_d_t=0f;
 
     public Vector2 offset_vector;
     //private SimpleStreetLight light01;
@@ -68,6 +72,7 @@ public class VehicleBehaviour : MonoBehaviour
         localstayBlocade_fl = vehicle.stayBlocade_fl;
         localcanAccelerate_fl = vehicle.canAccelerate_fl;
         currentlyAvoidingCollision_fl = false;
+        localDestroy_fl = false;
     }
 
     void FixedUpdate()
@@ -81,6 +86,16 @@ public class VehicleBehaviour : MonoBehaviour
         if (stayBlocadeTimer_tim <= 0)
             localstayBlocade_fl = false;
         NextCarChecking();
+        if(localDestroy_fl)
+        {
+            temp_d_t += Time.deltaTime;
+        }
+        if (destroy_timer == temp_d_t || temp_d_t>destroy_timer)
+        {
+            Destroy(this.gameObject);
+            daddy.existing_cars.Remove(this.gameObject);
+
+        }
     }
 
     void NextCarChecking()
@@ -252,6 +267,7 @@ public class VehicleBehaviour : MonoBehaviour
             stayBlocadeTimer_tim = 0.1f;
             RoundRotation();
             Debug.Log("Wyszedłem!!!");
+            localDestroy_fl = true;
         }
     }
 
