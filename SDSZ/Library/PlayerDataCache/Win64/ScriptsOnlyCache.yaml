@@ -47,31 +47,31 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 9342}
+    - Class: 114
       Script: {instanceID: 9344}
     - Class: 114
-      Script: {instanceID: 9346}
+      Script: {instanceID: 9350}
     - Class: 114
-      Script: {instanceID: 9352}
+      Script: {instanceID: 9356}
     - Class: 114
-      Script: {instanceID: 9358}
+      Script: {instanceID: 9364}
     - Class: 114
-      Script: {instanceID: 9366}
+      Script: {instanceID: 9400}
     - Class: 114
-      Script: {instanceID: 9402}
+      Script: {instanceID: 9758}
     - Class: 114
-      Script: {instanceID: 9760}
+      Script: {instanceID: 9946}
     - Class: 114
-      Script: {instanceID: 9948}
+      Script: {instanceID: 10090}
     - Class: 114
-      Script: {instanceID: 10092}
+      Script: {instanceID: 10100}
     - Class: 114
-      Script: {instanceID: 10102}
+      Script: {instanceID: 10234}
     - Class: 114
-      Script: {instanceID: 10236}
+      Script: {instanceID: 10470}
     - Class: 114
-      Script: {instanceID: 10472}
-    - Class: 114
-      Script: {instanceID: 10544}
+      Script: {instanceID: 10542}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -112,17 +112,17 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9442}
+      Script: {instanceID: 9440}
     - Class: 114
-      Script: {instanceID: 9552}
+      Script: {instanceID: 9550}
     - Class: 114
-      Script: {instanceID: 9814}
+      Script: {instanceID: 9812}
     - Class: 114
-      Script: {instanceID: 9850}
+      Script: {instanceID: 9848}
     - Class: 114
-      Script: {instanceID: 10004}
+      Script: {instanceID: 10002}
     - Class: 114
-      Script: {instanceID: 10552}
+      Script: {instanceID: 10550}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -368,7 +368,7 @@ ScriptsOnlyBuild:
     className: TMP_InputField
   - hash:
       serializedVersion: 2
-      Hash: 6ea40323f2deecfc413a39d75344cc6c
+      Hash: 67f6d496c3abb10e1e891b4fd5762f6f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: VehicleSpawner

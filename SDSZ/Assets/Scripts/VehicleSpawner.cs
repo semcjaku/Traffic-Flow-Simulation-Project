@@ -31,7 +31,7 @@ public class VehicleSpawner : MonoBehaviour
     Vector2 wheretoplace_left;
     Vector2 wheretoplace_right;
 
-    int NumberOfVehicles = 6;
+    public int NumberOfVehicles = 20;
     int randomPosition;
     int colour_of_the_vehicle;
     int i = 0;
