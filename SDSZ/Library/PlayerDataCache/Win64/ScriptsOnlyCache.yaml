@@ -2,8 +2,10 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - Crossroads
+    - DontDestroy
     - MainMenu
     - SimpleStreetLight
+    - SliderValue
     - StreetLightControlling
     - Vehicle
     - VehicleBehaviour
@@ -24,6 +26,8 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.Slider
+    - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/StartMenu.unity:
     - Class: 1
@@ -47,31 +51,39 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9342}
+      Script: {instanceID: 9330}
     - Class: 114
       Script: {instanceID: 9344}
     - Class: 114
-      Script: {instanceID: 9350}
+      Script: {instanceID: 9346}
     - Class: 114
-      Script: {instanceID: 9356}
+      Script: {instanceID: 9352}
     - Class: 114
-      Script: {instanceID: 9364}
+      Script: {instanceID: 9358}
+    - Class: 114
+      Script: {instanceID: 9366}
     - Class: 114
       Script: {instanceID: 9400}
     - Class: 114
-      Script: {instanceID: 9758}
+      Script: {instanceID: 9402}
     - Class: 114
-      Script: {instanceID: 9946}
+      Script: {instanceID: 9404}
     - Class: 114
-      Script: {instanceID: 10090}
+      Script: {instanceID: 9760}
     - Class: 114
-      Script: {instanceID: 10100}
+      Script: {instanceID: 9950}
     - Class: 114
-      Script: {instanceID: 10234}
+      Script: {instanceID: 10040}
     - Class: 114
-      Script: {instanceID: 10470}
+      Script: {instanceID: 10096}
     - Class: 114
-      Script: {instanceID: 10542}
+      Script: {instanceID: 10106}
+    - Class: 114
+      Script: {instanceID: 10240}
+    - Class: 114
+      Script: {instanceID: 10476}
+    - Class: 114
+      Script: {instanceID: 10548}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -112,17 +124,17 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9440}
+      Script: {instanceID: 9442}
     - Class: 114
-      Script: {instanceID: 9550}
+      Script: {instanceID: 9552}
     - Class: 114
-      Script: {instanceID: 9812}
+      Script: {instanceID: 9814}
     - Class: 114
-      Script: {instanceID: 9848}
+      Script: {instanceID: 9850}
     - Class: 114
-      Script: {instanceID: 10002}
+      Script: {instanceID: 10006}
     - Class: 114
-      Script: {instanceID: 10550}
+      Script: {instanceID: 10556}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -168,6 +180,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: ActivationTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 3e78eae51c576caec62724c1f30126a8
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SliderValue
   - hash:
       serializedVersion: 2
       Hash: cf9f5cf2c3145a37ac07f00e50e460f9
@@ -368,7 +386,7 @@ ScriptsOnlyBuild:
     className: TMP_InputField
   - hash:
       serializedVersion: 2
-      Hash: 67f6d496c3abb10e1e891b4fd5762f6f
+      Hash: da4b2bcc867f5bad0ba43b789a124816
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: VehicleSpawner
@@ -657,6 +675,12 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SettingsMenu
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.Analytics.Editor.dll
     namespaceName: UnityEditor.Analytics
     className: AnalyticsEventTrackerEditor
@@ -684,6 +708,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: VehicleBehaviour
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DontDestroy
   - hash:
       serializedVersion: 2
       Hash: 3f8d7b92a6be3c715e55d5cfa7cc8384

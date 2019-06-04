@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VehicleSpawner : MonoBehaviour
 {
+    public Slider slider;
     public GameObject vehicle_car_orange;
     public GameObject vehicle_car_red;
     public GameObject vehicle_car_blue;
@@ -14,24 +16,24 @@ public class VehicleSpawner : MonoBehaviour
 
     float nextSpawn = 4.0f;
 
-    float XshiftLeft = -6.35f;
+    float XshiftLeft = -9f;
     float YshiftLeft = -0.39f;
 
-    float XshiftRight = +6.35f;
+    float XshiftRight = +9f;
     float YshiftRight = +0.39f;
 
     float XshiftTop = -0.39f;
-    float YshiftTop = +3.6f;
+    float YshiftTop = +6f;
 
     float XshiftDown = +0.39f;
-    float YshiftDown = -3.6f;
+    float YshiftDown = -6f;
 
     Vector2 wheretoplace_top;
     Vector2 wheretoplace_down;
     Vector2 wheretoplace_left;
     Vector2 wheretoplace_right;
 
-    public int NumberOfVehicles = 20;
+    public int NumberOfVehicles;
     int randomPosition;
     int colour_of_the_vehicle;
     int i = 0;
@@ -43,6 +45,8 @@ public class VehicleSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        slider = GameObject.Find("Car_Amount_slider").GetComponent<Slider>();
+        NumberOfVehicles = (int)slider.value;
         List<GameObject> existing_cars = new List<GameObject>();
     }
 
