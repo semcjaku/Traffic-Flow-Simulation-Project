@@ -13,7 +13,8 @@ public class DontDestroy : MonoBehaviour
         
         DontDestroyOnLoad(this.gameObject);
 
-        Debug.Log("nie zniszczylem" );
+        
+        
     }
 
     

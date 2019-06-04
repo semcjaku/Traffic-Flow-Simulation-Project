@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 482490159551561207, guid: 3fd014d9780d9024fb485725b809e2f7,
         type: 3}
       propertyPath: m_Name
-      value: CarTEmplateBlue
+      value: CarTemplateBlue
       objectReference: {fileID: 0}
     - target: {fileID: 1316810644775205279, guid: 3fd014d9780d9024fb485725b809e2f7,
         type: 3}

@@ -77,6 +77,7 @@ public class VehicleSpawner : MonoBehaviour
             }
             nextSpawn = Time.time + spawnRate;
             i++;
+            slider.value--;
         }
     }
 
