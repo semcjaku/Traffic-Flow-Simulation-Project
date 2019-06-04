@@ -295,12 +295,12 @@ PrefabInstance:
     - target: {fileID: 887676549828853797, guid: 686cf76847e86a44781e6f7b412ffc96,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 0.028198
       objectReference: {fileID: 0}
     - target: {fileID: 887676549828853797, guid: 686cf76847e86a44781e6f7b412ffc96,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -0.016296
       objectReference: {fileID: 0}
     - target: {fileID: 887676549828853797, guid: 686cf76847e86a44781e6f7b412ffc96,
         type: 3}
@@ -1347,6 +1347,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031707336036959358, guid: e956a254a4387284eb9422009d0922f5,
+        type: 3}
+      propertyPath: m_TagString
+      value: slider_component
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031707336093676830, guid: e956a254a4387284eb9422009d0922f5,
+        type: 3}
+      propertyPath: m_TagString
+      value: slider_component
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031707336093676830, guid: e956a254a4387284eb9422009d0922f5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031707337275904956, guid: e956a254a4387284eb9422009d0922f5,
+        type: 3}
+      propertyPath: m_TagString
+      value: slider_value
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031707337967838961, guid: e956a254a4387284eb9422009d0922f5,
+        type: 3}
+      propertyPath: m_TagString
+      value: slider_component
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e956a254a4387284eb9422009d0922f5, type: 3}

@@ -8,6 +8,8 @@ TagManager:
   - Vehicle
   - Light
   - Amount_slider
+  - slider_component
+  - slider_value
   layers:
   - Default
   - TransparentFX
