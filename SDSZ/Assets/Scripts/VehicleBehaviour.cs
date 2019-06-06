@@ -23,21 +23,15 @@ public class VehicleBehaviour : MonoBehaviour
 
     public int nextTurn;
 
-    Image m_Image;
-    public Sprite m_Sprite;
-
     public bool localstayBlocade_fl;
     public bool localcanAccelerate_fl;
     public bool currentlyAvoidingCollision_fl;
-    public bool SeenOtherCar_fl;
-    public bool DisabledEdge_fl;
     public bool localDestroy_fl;
 
     private float stayBlocadeTimer_tim, stayTime_tim, stayTime1, stayTime2;
     private Rigidbody2D rb2d;
     private CapsuleCollider2D carCollider;
     private Crossroads crossroads;
-    private BoxCollider2D VirtualBumper;
 
     private Collider2D another_car_collider;
     public VehicleSpawner daddy;
@@ -45,14 +39,8 @@ public class VehicleBehaviour : MonoBehaviour
 
     public float temp_d_t=0f;
 
-    public Vector2 offset_vector;
-    //private SimpleStreetLight light01;
-
     void Start()
     {
-
-        m_Image = GetComponent<Image>();
-
         localcurrentSpeed = vehicle.currentSpeed;
         localxSpeedCompound = vehicle.xSpeedCompound;
         localcurrentAcceleration = vehicle.currentAcceleration;
@@ -60,15 +48,11 @@ public class VehicleBehaviour : MonoBehaviour
 
         rb2d = GetComponent<Rigidbody2D>();
         carCollider = GetComponent<CapsuleCollider2D>();
-        VirtualBumper = GetComponent<BoxCollider2D>();
 
         daddy = GameObject.Find("CarSpawner").GetComponent<VehicleSpawner>();
         crossroads = GameObject.Find("Obszar skrzyzowania").GetComponent<Crossroads>();
-        //light01 = GameObject.Find("TrafficLight01").GetComponent<SimpleStreetLight>();
-        /////////////////TEMP///////////////////////////
         nextTurn = UnityEngine.Random.Range(1,5);
         localcurrentAcceleration = 0.0005f;
-        ////////////////////////////////////
         localstayBlocade_fl = vehicle.stayBlocade_fl;
         localcanAccelerate_fl = vehicle.canAccelerate_fl;
         currentlyAvoidingCollision_fl = false;
@@ -109,10 +93,10 @@ public class VehicleBehaviour : MonoBehaviour
                 float line_of_sight = (localySpeedCompound/localxSpeedCompound) * (another_car_rb2d.position.x - rb2d.position.x) + rb2d.position.y;
                 if ((another_car_rb2d.position.y >= line_of_sight-0.5f*carCollider.size.y && another_car_rb2d.position.y <= line_of_sight + 0.5f * carCollider.size.y) || (localxSpeedCompound>=-0.00001f && localxSpeedCompound<=0.00001f && another_car_rb2d.position.x == rb2d.position.x) || (localxSpeedCompound >= -0.00001f && localxSpeedCompound <= 0.00001f && localySpeedCompound >= -0.00001f && localySpeedCompound <= 0.00001f)) //if car is in line of sight
                 {
-                    if ((((Math.Abs(rb2d.rotation) % 360 > 0.00001f && Math.Abs(rb2d.rotation) % 360 < 179.99999f && rb2d.rotation > 0) || (Math.Abs(rb2d.rotation) % 360 > 180.00001f && rb2d.rotation < 0)) && another_car_rb2d.position.x <= rb2d.position.x) || //if seen car is actually in front of this car
+                    if ((((Math.Abs(rb2d.rotation) % 360 > 0.00001f && Math.Abs(rb2d.rotation) % 360 < 179.99999f && rb2d.rotation > 0) || (Math.Abs(rb2d.rotation) % 360 > 180.00001f && rb2d.rotation < 0)) && another_car_rb2d.position.x <= rb2d.position.x) ||
                         (((Math.Abs(rb2d.rotation) % 360 > 180.00001f && rb2d.rotation > 0) || (Math.Abs(rb2d.rotation) % 360 > 0.00001f && Math.Abs(rb2d.rotation) % 360 < 179.99999f && rb2d.rotation < 0)) && another_car_rb2d.position.x >= rb2d.position.x) ||
                         (Math.Abs(rb2d.rotation) % 360 >= 179.99999f && Math.Abs(rb2d.rotation) % 360 <= 180.00001f && another_car_rb2d.position.y <= rb2d.position.y) ||
-                        (Math.Abs(rb2d.rotation) % 360 >= 359.99999f && Math.Abs(rb2d.rotation) % 360 <= 0.00001f && another_car_rb2d.position.y >= rb2d.position.y))
+                        (Math.Abs(rb2d.rotation) % 360 >= 359.99999f && Math.Abs(rb2d.rotation) % 360 <= 0.00001f && another_car_rb2d.position.y >= rb2d.position.y))    //if seen car is actually in front of this car
                     {
                         Debug.Log("Jestem: " + this + "Widzę auto: " + another_one);
                         if(carCollider.Distance(another_car_collider).distance <= carCollider.size.y)
@@ -144,13 +128,9 @@ public class VehicleBehaviour : MonoBehaviour
         localcurrentSpeed = 0.025f;
     }
 
-    void CarSlowDown(float x)
+    void CarSetSpeed(float x)
     {
-        if (localcurrentSpeed > x)
-            localcurrentSpeed -= x;
-        else
-            localcurrentSpeed = 0;
-
+        localcurrentSpeed = x;
     }
 
     void Accelerate(float a)
@@ -192,7 +172,7 @@ public class VehicleBehaviour : MonoBehaviour
             localySpeedCompound *= -1;
     }
 
-    void OnTriggerEnter2D(Collider2D other) //#WIP #Temp
+    void OnTriggerEnter2D(Collider2D other)
     {
         
 
@@ -216,13 +196,6 @@ public class VehicleBehaviour : MonoBehaviour
             }
             
         }
-        /*if (VirtualBumper.IsTouching(other) && other.gameObject.tag == "Vehicle")
-        {
-            CarSlowDown(0.01f);
-            SeenOtherCar_fl = true;
-            Debug.Log("Spotkałem auto: " + gameObject);
-
-        }*/
     }
 
     void OnTriggerStay2D(Collider2D other) //#WIP #Temp
@@ -240,18 +213,7 @@ public class VehicleBehaviour : MonoBehaviour
                 }
                 stayTime_tim += Time.deltaTime;
             }
-
         }
-        
-
-        /*if (other.gameObject.tag == "Vehicle")
-        {
-            CarSlowDown(0.01f);
-            SeenOtherCar_fl = true;
-            Debug.Log("Spotkałem auto: " + gameObject);
-        }*/
-
-
     }
 
     

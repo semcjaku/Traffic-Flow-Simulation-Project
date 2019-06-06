@@ -1,0 +1,104 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class VehicleSpawner : MonoBehaviour
+{
+    public Slider slider;	//UI element to choose number of cars
+	//object schemes from which the cars will be instantiated
+    public GameObject vehicle_car_orange;
+    public GameObject vehicle_car_red;
+    public GameObject vehicle_car_blue;
+
+    private GameObject temp_object;	//an object that temporarily will keep the instantiated car
+
+    public float spawnRate = 4.0f;	//time between vehicle spawning in seconds
+
+    float nextSpawn = 4.0f;	//time left to next spawning
+
+	//Coordinates of spawning points on different sides of the crossing
+    float XshiftLeft = -9f;
+    float YshiftLeft = -0.39f;
+
+    float XshiftRight = +9f;
+    float YshiftRight = +0.39f;
+
+    float XshiftTop = -0.39f;
+    float YshiftTop = +6f;
+
+    float XshiftDown = +0.39f;
+    float YshiftDown = -6f;
+
+	//vectors of said coordinates
+    Vector2 wheretoplace_top;
+    Vector2 wheretoplace_down;
+    Vector2 wheretoplace_left;
+    Vector2 wheretoplace_right;
+
+    public int NumberOfVehicles;	//number of vehicles to spawn
+    int randomPosition;		//variable used to randomize spawn points
+    int colour_of_the_vehicle;	//variable used to randomize vehicle color
+    int i = 0;	//spawned vehicles counter
+
+    public List<GameObject> existing_cars;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        slider = GameObject.Find("Car_Amount_slider").GetComponent<Slider>();	//get the user's selection of car number and set it in simulation
+        NumberOfVehicles = (int)slider.value;
+        List<GameObject> existing_cars = new List<GameObject>();	//list of all cars
+    }
+
+    // Update is called once per 0.02 seconds
+    void FixedUpdate()
+    {      
+        if (Time.time > nextSpawn && i<NumberOfVehicles)	//if time interval between spawns have passed and the maximal number of cars hasn't yet been reached
+        {
+		//randomize spawn point and instantiate a car there
+            randomPosition = Random.Range(1, 4);
+            switch (randomPosition)
+            {
+                case 1:
+                    wheretoplace_left = new Vector2(XshiftLeft, YshiftLeft);
+                    InstantiateVehicle(wheretoplace_left, 270f);
+                    break;
+                case 2:
+                    wheretoplace_top = new Vector2(XshiftTop, YshiftTop);
+                    InstantiateVehicle(wheretoplace_top, 180f);
+                    break;
+                case 3:
+                    wheretoplace_right = new Vector2(XshiftRight, YshiftRight);
+                    InstantiateVehicle(wheretoplace_right, 90f);
+                    break;
+                case 4:
+                    wheretoplace_down = new Vector2(XshiftDown, YshiftDown);
+                    InstantiateVehicle(wheretoplace_down, 0f);
+                    break;
+            }
+            nextSpawn = Time.time + spawnRate;	//set the time of next spawning
+            i++;	//increase car counter
+            slider.value--;	//decrease value from user (used to display number of cars left to spawn)
+        }
+    }
+
+    void InstantiateVehicle(Vector2 wheretoplace, float angle)
+    {
+        colour_of_the_vehicle = Random.Range(1, 4);	//randomize car color
+        switch(colour_of_the_vehicle)	//instantiate a car of that color on given position with rotation corresponding to that position (so it faces the crossing)
+        {
+            case 1:
+                temp_object = GameObject.Instantiate(vehicle_car_orange, wheretoplace, transform.rotation * Quaternion.Euler(0f, 0f, angle));
+                break;
+            case 2:
+                temp_object = GameObject.Instantiate(vehicle_car_red, wheretoplace, transform.rotation * Quaternion.Euler(0f, 0f, angle));
+                break;
+            case 3:
+                temp_object = GameObject.Instantiate(vehicle_car_blue, wheretoplace, transform.rotation * Quaternion.Euler(0f, 0f, angle));
+                break;
+        }
+        existing_cars.Add(temp_object);		//add the generated car to the cars list
+    }
+}

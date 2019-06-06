@@ -37,7 +37,6 @@ public class VehicleSpawner : MonoBehaviour
     int randomPosition;
     int colour_of_the_vehicle;
     int i = 0;
-    int k = 0;
 
     public List<GameObject> existing_cars;
 

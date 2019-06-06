@@ -14,8 +14,4 @@ public class Vehicle : ScriptableObject
 
     public bool stayBlocade_fl = false;
     public bool canAccelerate_fl = true;
-
-    Image image;
-
-
 }
