@@ -1,4 +1,4 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,25 +6,27 @@ public class StreetLight : MonoBehaviour
 {
     public enum LightColor { red, yellow, green };
 
+	//lights graphics
     public Sprite RedLight;
     public Sprite YellowLight;
     public Sprite GreenLight;
-    public int status;
+    public int status;	//currently active light
+
+	//duration of lights in seconds
+    public float yellowLightphase = 1.5f;
+    public float redlightphase = 31.5f;
+    public float greenlightphase = 10f;
 
 
-    float yellowLightphase_afterRed = 2f;
-    float yellowLightphase_afterGreen = 1f;
-    float redLightphase = 30f;
-    float greenLightphase = 10f;
+    public float timer = 10.0f;	//timer of light changes, initially set to length of green light (different instances have an offset set in unity)
 
-    public float timer = 10.0f;
+    private GameObject carCrossing = null;	//the car currently interacting with light's collider
 
-    private GameObject carCrossing = null;
-
-    bool WasGreen = false;
+    public bool WasGreen = false;	//a flag stating whether the yellow light is supposed to change into green or red
     // Start is called before the first frame update
     void Start()
     {
+	//start with the light being red
         this.gameObject.GetComponent<SpriteRenderer>().sprite = RedLight;
         status = 0;
     }
@@ -32,14 +34,14 @@ public class StreetLight : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        timer -= Time.deltaTime;
-        if (timer <= 0)
+        timer -= Time.deltaTime;	//reduce the timer
+        if (timer <= 0)		//if the waiting is finished
         {
             if (this.gameObject.GetComponent<SpriteRenderer>().sprite == RedLight) //R->Y
             {
                 this.gameObject.GetComponent<SpriteRenderer>().sprite = YellowLight;
                 status = (int)LightColor.yellow;
-                timer = yellowLightphase_afterGreen;
+                timer = yellowLightphase;
                 return;
             }
             if (this.gameObject.GetComponent<SpriteRenderer>().sprite == YellowLight) //Y->
@@ -48,9 +50,9 @@ public class StreetLight : MonoBehaviour
                 {
                     this.gameObject.GetComponent<SpriteRenderer>().sprite = GreenLight;
                     status = (int)LightColor.green;
-                    if (carCrossing != null) // && !carCrossing.Equals(null) jeÅ›li byÅ‚yby bÅ‚Ä™dy
+                    if (carCrossing != null) // && !carCrossing.Equals(null) jeœli by³yby b³êdy
                         carCrossing.SendMessage("CarStart");
-                    timer = redLightphase;
+                    timer = greenLightphase;
                     WasGreen = true;
                     return;
                 }
@@ -67,7 +69,7 @@ public class StreetLight : MonoBehaviour
             {
                 this.gameObject.GetComponent<SpriteRenderer>().sprite = YellowLight;
                 status = (int)LightColor.yellow;
-                timer = yellowLightphase_afterGreen; //normalnie greentoyellow ale to taka sama wartoÅ›Ä‡
+                timer = yellowLightphase
                 return;
             }
         }
@@ -75,19 +77,20 @@ public class StreetLight : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Vehicle")
+        if (other.gameObject.tag == "Vehicle")	//when a vehivle is approaching the light
         {
-            carCrossing = other.gameObject;
-            if (status == (int)LightColor.red)
+            carCrossing = other.gameObject;	//get the car reference
+            if (status == (int)LightColor.red)	//if the light is red, tell the car to stop
                 carCrossing.SendMessage("CarStop");
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Vehicle")
+        if (other.gameObject.tag == "Vehicle")	//when a vehicle is leaving the light (entering the crossing)
         {
-            carCrossing = null;
+            carCrossing.SendMessage("CarSetSpeed",0.03f);	//tell the car to change it's speed to a safe value
+            carCrossing = null;		//remove the car reference
         }
     }
 }

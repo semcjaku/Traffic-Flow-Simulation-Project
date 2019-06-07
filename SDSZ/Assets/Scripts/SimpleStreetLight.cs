@@ -11,9 +11,7 @@ public class SimpleStreetLight : MonoBehaviour
 	public Sprite GreenLight;
     public int status;
 
-
-    public float redtoyellow = 2f;
-    public float yellowtogreen = 1.5f;
+    public float yellowlightphase = 1.5f;
     public float redlightphase = 31.5f;
     public float greenlightphase = 10f;
 
@@ -39,7 +37,7 @@ public class SimpleStreetLight : MonoBehaviour
 			{
 				this.gameObject.GetComponent<SpriteRenderer>().sprite = YellowLight;
                 status = (int)LightColor.yellow;
-                timer = yellowtogreen;
+                timer = yellowlightphase;
 				return;
 			}
 			if (this.gameObject.GetComponent<SpriteRenderer>().sprite == YellowLight) //Y->
@@ -67,7 +65,7 @@ public class SimpleStreetLight : MonoBehaviour
 			{
 				this.gameObject.GetComponent<SpriteRenderer>().sprite = YellowLight;
                 status = (int)LightColor.yellow;
-                timer = yellowtogreen; //normalnie greentoyellow ale to taka sama wartość
+                timer = yellowlightphase; //normalnie greentoyellow ale to taka sama wartość
 				return;
 			}
 		}
@@ -87,6 +85,7 @@ public class SimpleStreetLight : MonoBehaviour
     {
         if (other.gameObject.tag == "Vehicle")
         {
+            carCrossing.SendMessage("CarSetSpeed",0.03f);
             carCrossing = null;
         }
     }
