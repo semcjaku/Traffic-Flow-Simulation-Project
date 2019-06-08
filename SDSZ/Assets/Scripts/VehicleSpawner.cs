@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class VehicleSpawner : MonoBehaviour
 {
@@ -77,6 +78,10 @@ public class VehicleSpawner : MonoBehaviour
             nextSpawn = Time.time + spawnRate;
             i++;
             slider.value--;
+        }
+        if(slider.value<=0 && existing_cars.Count==0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 

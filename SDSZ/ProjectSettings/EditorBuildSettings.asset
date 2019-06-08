@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Symulacja_core.unity
     guid: 66deb4b8cbdb36e4e8b45a4ff31c898c
+  - enabled: 1
+    path: Assets/Scenes/Plansza_koncowa.unity
+    guid: 5d46e132c8e3cd045967392bfa0505f1
   m_configObjects: {}

@@ -85,7 +85,7 @@ public class SimpleStreetLight : MonoBehaviour
     {
         if (other.gameObject.tag == "Vehicle")
         {
-            carCrossing.SendMessage("CarSetSpeed",0.03f);
+            carCrossing.SendMessage("CarSetSpeed",0.035f);
             carCrossing = null;
         }
     }

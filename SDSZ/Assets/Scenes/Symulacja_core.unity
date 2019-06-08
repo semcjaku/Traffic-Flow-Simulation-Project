@@ -345,6 +345,7 @@ GameObject:
   m_Component:
   - component: {fileID: 610952689}
   - component: {fileID: 610952688}
+  - component: {fileID: 610952690}
   m_Layer: 0
   m_Name: CarSpawner
   m_TagString: Untagged
@@ -388,6 +389,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &610952690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610952687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796f9999a1d1ccd43b450f02dc55a859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &735876437
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,6 +412,7 @@ GameObject:
   - component: {fileID: 735876439}
   - component: {fileID: 735876438}
   - component: {fileID: 735876440}
+  - component: {fileID: 735876441}
   m_Layer: 0
   m_Name: Obszar skrzyzowania
   m_TagString: Cross section
@@ -460,6 +474,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radiusLeft: 0
   radiusRight: 0
+--- !u!114 &735876441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735876437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796f9999a1d1ccd43b450f02dc55a859, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &792191020
 GameObject:
   m_ObjectHideFlags: 0

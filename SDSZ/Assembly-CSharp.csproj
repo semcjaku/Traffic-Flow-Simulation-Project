@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\Checker_Abilities.cs" />
      <Compile Include="Assets\Scripts\Crossroads.cs" />
      <Compile Include="Assets\Scripts\DontDestroy.cs" />
+     <Compile Include="Assets\Scripts\EndScreen.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />
      <Compile Include="Assets\Scripts\SettingsMenu.cs" />
      <Compile Include="Assets\Scripts\SimpleStreetLight.cs" />

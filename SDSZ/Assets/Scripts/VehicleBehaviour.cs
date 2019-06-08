@@ -29,6 +29,7 @@ public class VehicleBehaviour : MonoBehaviour
     public bool localDestroy_fl;
 
     private float stayBlocadeTimer_tim, stayTime_tim, stayTime1, stayTime2;
+    public float collision_avoiding_tim;
     private Rigidbody2D rb2d;
     private CapsuleCollider2D carCollider;
     private Crossroads crossroads;
@@ -57,11 +58,14 @@ public class VehicleBehaviour : MonoBehaviour
         localcanAccelerate_fl = vehicle.canAccelerate_fl;
         currentlyAvoidingCollision_fl = false;
         localDestroy_fl = false;
+        collision_avoiding_tim = 0f;
     }
 
     void FixedUpdate()
     {
-        if(!currentlyAvoidingCollision_fl)
+        if (localcurrentSpeed <= localcurrentAcceleration)
+            Crossroads.totalWaitingTime += Time.deltaTime;
+        if (!currentlyAvoidingCollision_fl)
             Accelerate(localcurrentAcceleration);
         SetMovementCompounds(); //set compounds
         Vector2 movement = new Vector2(rb2d.position.x + localxSpeedCompound, rb2d.position.y + localySpeedCompound); //set movement vector
@@ -99,16 +103,20 @@ public class VehicleBehaviour : MonoBehaviour
                         (Math.Abs(rb2d.rotation) % 360 >= 359.99999f && Math.Abs(rb2d.rotation) % 360 <= 0.00001f && another_car_rb2d.position.y >= rb2d.position.y))    //if seen car is actually in front of this car
                     {
                         Debug.Log("Jestem: " + this + "Widzę auto: " + another_one);
-                        if(carCollider.Distance(another_car_collider).distance <= carCollider.size.y)
+                        if (carCollider.Distance(another_car_collider).distance <= carCollider.size.y)
                         {
                             Debug.Log("Jestem: " + this + "Zwalniam");
                             currentlyAvoidingCollision_fl = true;
                             Accelerate(-0.004f);
+                            collision_avoiding_tim += Time.deltaTime;
                         }
-                        else
+                        else if (collision_avoiding_tim > Time.deltaTime*2)
                         {
                             currentlyAvoidingCollision_fl = false;
+                            collision_avoiding_tim = 0f;
                         }
+                        else
+                            collision_avoiding_tim += Time.deltaTime / 2f;
                     }
                 }
             }

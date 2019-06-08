@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Crossroads : MonoBehaviour
 {
+    public static float totalWaitingTime;
     public float radiusLeft;
     public float radiusRight;
     private BoxCollider2D area;
@@ -14,6 +15,7 @@ public class Crossroads : MonoBehaviour
         area = GetComponent<BoxCollider2D>();
         radiusLeft = 0.75f * area.size.x;
         radiusRight = 0.25f * area.size.x;
+        totalWaitingTime = 0f;
     }
 
     // Update is called once per frame
