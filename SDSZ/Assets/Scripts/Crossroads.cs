@@ -13,8 +13,8 @@ public class Crossroads : MonoBehaviour
     void Start()
     {
         area = GetComponent<BoxCollider2D>();
-        radiusLeft = 0.75f * area.size.x;
-        radiusRight = 0.25f * area.size.x;
+        radiusLeft = 0.60f * area.size.x;
+        radiusRight = 0.27f * area.size.x;
         totalWaitingTime = 0f;
     }
 

@@ -11,7 +11,9 @@ public class EndScreen : MonoBehaviour
     void Start()
     {
         cs = GameObject.Find("CarSpawner").GetComponent<VehicleSpawner>();
-        numberOfCars.text = "dupa";// cs.NumberOfVehicles.ToString();
+        numberOfCars = GameObject.Find("NumberOfCars Text").GetComponent<Text>();
+        averageWaitingTime = GameObject.Find("AverageWaitingTime Text ").GetComponent<Text>();
+        numberOfCars.text = cs.NumberOfVehicles.ToString();
         averageWaitingTime.text = (Crossroads.totalWaitingTime / cs.NumberOfVehicles).ToString();
     }
 

@@ -39,6 +39,8 @@ public class VehicleSpawner : MonoBehaviour
     int colour_of_the_vehicle;
     int i = 0;
 
+    private bool scenechangeallowed_fl = true;
+
     public List<GameObject> existing_cars;
 
 
@@ -79,9 +81,10 @@ public class VehicleSpawner : MonoBehaviour
             i++;
             slider.value--;
         }
-        if(slider.value<=0 && existing_cars.Count==0)
+        if(slider.value<=0 && existing_cars.Count==0 && scenechangeallowed_fl==true)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            scenechangeallowed_fl = false;
         }
     }
 
