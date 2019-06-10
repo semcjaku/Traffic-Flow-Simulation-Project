@@ -110,7 +110,7 @@ public class VehicleBehaviour : MonoBehaviour
                             Accelerate(-0.004f);
                             collision_avoiding_tim += Time.deltaTime;
                         }
-                        else if (collision_avoiding_tim > Time.deltaTime*2)
+                        else if (collision_avoiding_tim > Time.deltaTime*3)
                         {
                             currentlyAvoidingCollision_fl = false;
                             collision_avoiding_tim = 0f;
